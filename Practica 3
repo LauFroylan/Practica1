@@ -1,0 +1,18 @@
+indic3<-(read.csv(("C:\\Users\\Sala-D11\\Documents\\4series.csv")))
+decost<-ts(indic3[,1],start = 2005,frequency = 4,end = 2014)      #,frequency = 4,start = (2005))
+#solo la columna 1 de mi matriz indic3 (columna 1 tasa de desocupacion)
+decost
+#####declarar 3 series de tiempo de la matriz indic3
+####la serie de tiempo deben ser la tasa de ocupacion parcial
+#####trabajo asalariado y tasa de condiciones criticas
+decpar<-ts(indic3[,2],start = 2005,frequency = 4,end = 2014)      
+###serie de tiempo de tasa de desocupacion parcial
+decpar
+
+trabasal<-ts(indic3[,3],start = 2005,frequency = 4,end = 2014)      
+###serie de tiempo de trabajo asalariado
+trabasal
+
+critocup<-ts(indic3[,4],start = 2005,frequency = 4,end = 2014)      
+###serie de tiempo de condiciones criticas de ocupacion
+critocup
