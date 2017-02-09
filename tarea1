@@ -1,0 +1,3 @@
+Web2 <- "http://www3.inegi.org.mx/Sistemas/infoenoe/Default_15mas.aspx?s=est&c=27736.txt"
+datosWeb21 <- read.table(Web2)
+head(datosWeb21)
