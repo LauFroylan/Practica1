@@ -1,0 +1,10 @@
+mujeres<-(read.csv(("C:\\Users\\Sala-E6\\Documents\\mujeres.csv")))
+#convertir los datos en un objeto tipo ts (serie de tiempo)
+des<-ts(mujeres,start = 2013,frequency = 4,end = 2016)      
+#la serie de tiempo solo tiene 13 datos de los 15 dentro de la base
+des
+#nos damos cuenta que solo tiene el primer cuatrimestre del año 2016
+des<-ts(mujeres,start = 2013,frequency = 4,end = c(2016,03))
+des
+#al poner end=c(2016,03) le decimos hasta que cuatrimestre debe de tomar. Tambien lo podemos hacer con start. 
+#Nuestra serie de tiempo ya tiene los 15 datos de la base original
