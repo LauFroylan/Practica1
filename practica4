@@ -1,0 +1,57 @@
+#1.buscamos en inegi los indicadores 
+#2.bajamos la base de datos (la serie de tiempo)
+#3.hubicar la ruta de la ST en la computadora
+#4.importamos en R el archivo .Csv
+#5.Reconocer el archivo como ST
+
+## Generar 4 objetos con datos aleatorios y que tengan 60 datos
+#objeto 1 de numero de profesionista (mill) rango de 5 a 8
+#objeto 2 crecimiento pib rango de 0 a 5
+#objeto 3 porcentaje de ocupados rango de 40 a 60
+#objeto 4 porcentaje de desocupados rango de 3 a 8
+
+#####rango, cuantos datos quiero, con remplazo
+#sample genera una muestra aleatoria 
+#Cuando no se le pone replace true automanticamente lo hace sin remplazo
+prof<- sample(5:8,60, replace=TRUE)
+prof
+View(prof)
+cpib<-sample(0:5,60,replace=TRUE)
+pocu<-sample(40:60,60,replace = TRUE)
+pdes<-sample(3:8,60,replace=TRUE)
+
+####1) UNA VEZ GENERADO LOS DATOS HACER UN DATA FRAME DE LOS 4 OBJETOS (para generar una matriz)
+pceu<-data.frame(prof,cpib,pocu,pdes)
+pceus12<-pceu[1:12,] #genera una base solo de los 12 primeros datos
+
+#2) mostrar en consola los primeros 12 y ultimos 12 datos
+#primer entrada se refiere a renglon la segunda a columnas
+pceu[1:12,]   #muestra los primeros 12 renglones
+pceu[49:60,]  
+
+#3) Convertir los objetos en series de tiempo (cada uno) que comience en 2010
+#y son datos mensuales
+
+stcpib<-ts(pceu[,1],start = 2010,frequency = 12)
+stprof<-ts(prof,frequency = 12,start = (2010))
+stpocu<-ts(pocu,frequency = 12,start = (2010))
+stpdes<-ts(pdes,frequency = 12,start = (2010))
+end (stcpib)   #nos dice hasta donde termina
+
+#4) graficar los profesionistas y ocupados en la misma imagen
+plot(cbind(stprof,stpocu))
+#cbind funcion para graficar em la misma imagen
+
+#graficar pib y desocupados
+plot(cbind(stcpib,stpdes))
+#graficar todos juntos
+plot(cbind(stcpib, stprof,stpocu,stpdes))
+
+#5) graficar dos juntas sin la funcion cbind
+stpceu<-ts(pceu,frequency = 12,start = (2010))
+plot.ts(stpceu[,c(1,3)])
+plot.ts(pceu[,c(1,3)])  #aunque no este declarada como serie de tiempo
+#la c es para concatenar
+
+#para una serie de tiempo multiple
+pceuts<- ts.intersect(pceu)
