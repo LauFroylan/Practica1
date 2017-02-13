@@ -1,0 +1,57 @@
+###### Series de tiempo multiple #####
+seriemultiple<- ts.intersect(desocuts,pobts,asets,inforts) #serie de tiempo multiple
+#con las 4 variables
+plot(seriemultiple,main = "Serie de tiempo multiple",xlab = "Años",ylab = "Numero de personas", col="green") #grafica de serie de tiempo multiple
+# nombre de la serie que va a graficar
+#2°que titulo principal va a tener la serie de tiempo
+#3° etiqueta del eje x
+#4° etiqueta del eje y
+#5 que color quieren la grafica
+plot(seriemultiple,main = "Serie de tiempo multiple",xlab = "Años",ylab = "Numero de personas", col ="green", type = "overplotted", xlim = c(2002,2006))
+
+seriemultiple02.07<-window(seriemultiple, start = c(2002,1),end = c(2007,1)) #fraccionar o cortar una serie de tiempo
+#1° de cual serie de tiempo voy a cortar
+#2° donde comienza y donde acaba
+seriemultiple07.12<-window(seriemultiple, start = c(2007,1),end = c(2011,12))
+plot(seriesmultiple02.07, main="Series de tiempo multiple",xlab = "Años",ylab = "Numero de personas", col="brown")
+plot(seriesmultiple07.12, main="Series de tiempo multiple",xlab = "Años",ylab = "Numero de personas", col="violet")
+
+#para ver en donde terminan mis series de tiempo multiple
+start(seriemultiple); end(seriemultiple)
+
+#ejercicio
+######Obtener cuatro series de tiempo cada quien elege con minimo 30 datos....
+####Las series de tiempo que importen tienen que tener sustento para compararlos
+#####importarlas, declararlas series de tiempo, 
+#graficarlas juntas como series de tiempo cada una
+#crear de serie de tiempo multiple y graficarlas con formato 
+####despues dividir estas series de tiempo en 3 periodos con intervalos
+#iguales (si son 30 datos, generar 3 con 10 datos)
+
+val<-(read.csv(("C:\\Users\\SALA-D18\\Documents\\Precios Acciones.csv")))
+
+alfa<-val[,2]
+movil<-val[,3]
+nike<-val[,4]
+travel<-val[,5]
+
+
+alfast<-ts(alfa, start = 2000 ,frequency = 12) 
+movilst<-ts(movil, start = 2000 ,frequency = 12)
+nikest<-ts(nike, start = 2000 ,frequency = 12)
+travelst<-ts(travel, start = 2000 ,frequency = 12)
+
+seriemultiple<- ts.intersect(alfast,movilst,nikest,travelst)
+
+plot(seriemultiple,main = "Serie de tiempo multiple",xlab = "Periodo",ylab = "Precio de Accion", col ="red")
+
+
+seriemultiple01<-window(seriemultiple, start = c(2000,1),end = c(2000,10))
+
+seriemultiple02<-window(seriemultiple, start = c(2000,10),end = c(2001,8))
+
+seriemultiple03<-window(seriemultiple, start = c(2001,8),end = c(2002,6))
+
+plot(seriemultiple01, main="Series multiple",xlab = "Mes",ylab = "Precio de accion", col="orange")
+plot(seriemultiple02, main="Series multiple",xlab = "Mes",ylab = "Precio de accion", col="red")
+plot(seriemultiple03, main="Series multiple",xlab = "Mes",ylab = "Precio de accion", col="blue")
