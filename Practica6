@@ -1,0 +1,37 @@
+#Para descomponer una serie de tiempo graficamente se utiliza una funcion que se 
+##llama decompose, por lo que primero es importante reconocer la serie de tiempo y
+# despues aplicarle la funcion graficamente
+desoc<- sample(3:8,44,replace=T)
+tdesoc<-ts(desoc,frequency= 4,start = 2005)
+plot(decompose(tdesoc))
+plot(tdesoc)
+
+pib<-read.csv("C:\\Users\\SALA-D4\\Documents\\PIB México.csv")
+stpib<- ts (pib,frequency =4,start = 2007)
+plot(stpib)
+plot(decompose (stpib)) #para ver la tendencia y en la segunda suaviza la funcion 
+
+View(stpib)
+summary(stpib)  #estadisticas
+#para ver los elementos del stpib
+depibst<- decompose(stpib)
+names(depibst)
+depibst$trend #salen los datos que graficaron
+depibst$seasonal
+depibst$random
+
+######### Ejercicio en clase#############
+#descomponer una serie de tiempo 
+#1)graficamente y 2) mandar llamar cada uno de los componentes de la serie de tiempo
+#serie1=consumo de bienes y servicios de mx anuales [renglon 9:43,columna k]
+
+bs<-read.csv("C:\\Users\\SALA-D4\\Documents\\BS.csv")
+stbs<- ts (bs,frequency =12,start = 2012)
+plot(stbs)
+plot(decompose (stbs))
+
+destbs<- decompose(stbs)
+names(destbs)
+destbs$trend 
+destbs$seasonal
+destbs$random
