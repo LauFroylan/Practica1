@@ -1,0 +1,30 @@
+tasa <- read.csv ("C:\\Users\\SALA-D6\\Downloads\\tarea2.csv")
+tasast<- ts (tasa, frequency = 4, start = 2005)
+usq<- 0
+
+for(i in 1:45) {
+  usq[i] <- (tasast[i]+tasast[i+1]+tasast[i+2]+tasast[i+3])/4
+  print(usq[i])
+}
+
+ncentral<-ts(usq,frequency = 4, start = 2005)
+print(ncentral)
+
+usq2<-0
+for(i in 1:44) {
+  usq2[i] <- (ncentral[i]+ncentral[i+1])/2
+  print(usq2[i])
+}
+
+central<-ts(usq2,frequency = 4, start = 2005)
+print(central)
+
+#aditivo
+adi<-0
+for(i in 1:44) {
+  adi[i] <- tasast[i]-central[i]
+  print(adi[i])
+}
+
+ive<- ts(adi,frequency = 4,start= c(2005,02))
+print(ive)
