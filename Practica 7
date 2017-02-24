@@ -1,0 +1,75 @@
+######FOR######
+u1<- (1:10)#vector de entradas cuantas entradas se necesitaba analizar
+u2<-0
+for(i in 1:10){
+  u1[i]<-u1[i]+2
+  print(u1[i])
+}
+
+#####WHILE
+s<-5
+while(s<6){s<-s*2;print(s);}
+
+s<-1
+while(s<5){s<-s+1;;if(s==4) break;print(s);} #rompe la serie cuando llega al valor indicado
+
+s<-1
+while(s<5){s<-0+1;;if(s==2) break;print(s);} 
+#### corre todos los valores porq no encuentra el 2 
+
+s<-2
+while(s<5){s<-s+1;;if(s==3) next;print(s);} 
+
+desocupacion<-read.csv(file.choose()) #abre la ventana para elegir el archivo
+length(vector) #para ver la magnitud del vector
+
+est<-matrix(1:48,nrow=4)
+est
+k=1
+i=1
+for(c in 1:12)
+{
+  for(f in 1:4)
+  {
+    if(k<=2|k>=47)
+    {
+      est[f,c]=0
+    }
+    else {
+      est[f,c]=YT[i]
+      i=i+1
+    }
+    k=k+1
+  }
+}
+
+table<-cbind(est,v) #para juntar matrices de la misma magnitud
+
+#########################suavisar los picos
+####TENDENCIA
+#########################
+tsdes<-ts(desocupacion,frequency=4, start=2005)
+detsdes<-decompose(tsdes)
+detsdes$trend
+detsdes$seasonal
+plot(tsdes,col="blue",
+     main = "tasa de desocupacion trimestral",
+     ylab = "tasas",xlab = "años")
+lines(detsdes$trend,col="red",ylab="Tendencia")  #graficar la tendencia
+
+#########################
+######ESTACIONARIEDAD
+#########################
+monthplot(detsdes$seasonal.main="IVEc",ylab="ivec trimestral") #graficar las constantes
+detsdes$seasonal
+
+
+########TAREA
+#descomponer una serie con un modelo multiplicativo
+
+detsdes<-decompose(tsdes,type = "multiplicative")
+
+##### 1) ENCONTRAR UNA SERIE DE TIEMPO CON TENDENCIA A LA ALZA Y  
+####LA ESTACIONARIEDAD TAMBIEN SE INCREMENTE
+#### 2) APLICAR MODELO MULTIPLICATIVO
+#####3) GRAFICAR TENDENCIA....
