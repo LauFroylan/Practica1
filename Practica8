@@ -1,0 +1,95 @@
+######descomposicion clasica..
+####se utiliza la funcion descompose
+####otro tipo de descomposicion de la estacionariedad
+####tendencia y estacionariedad es la descomposicion
+####por Loess la cual esta basada en un logaritmo que permite descomponer
+####las series de tiempo en tres elementos: estacionariedad, tendencia
+### y aleatoriedad, uno de las ventajas de esta descomposicion es el calculo de la
+###estacionariedad que se obtienen valores de estacionariedad no constantes , en 
+###contraste con el metodo clasico de descomposicion
+
+
+######descomposicion clasica
+####se utiliza la funcion decompose por ejemplo
+
+desocupacion<-read.csv(file.choose()) #abre la ventana para elegir el archivo
+class(desocupacion)  ####para ver que clase es 
+des<-ts(desocupacion, frequency = 4,start = 2005)
+class(des)
+desco<-decompose(des)
+tend1<-desco$trend
+plot(tend1, col="blue",main="Tendencia Desocupacion",ylab= "Tasas",xlab="años")
+
+
+########descomposicion tendencia, estacional por Loose
+######se utiliza la funcion stl()
+
+####entonces para descomponer por Loose utilizamos 
+desco2<- stl(des,s.window = "periodic",robust = T) 
+#para que R me reconozca una serie univariadaa
+des<-ts(desocupacion[1:48,1], frequency = 4,start = 2005) #la hace time series
+desco2<- stl(des,s.window = "periodic",robust = T) 
+names(desco2)
+desco2
+#aqui si nos da una matriz completa y en descomposicion clasica no muestra 
+
+desco$trend
+#no nos da todos los valores de la matriz (descomposicion clasica)
+
+
+tend2<- desco2$time.series[,2]
+tend2
+
+#graficar sobre la descomposicion clasica
+lines(tend2,col="red")
+
+
+esta2<-desco2$time.series[,1]
+#extrae la estacionalidad
+esta2
+
+
+
+
+####################EJERCICIO
+
+PIB<-read.csv(file.choose()) 
+class(PIB) 
+pi<-ts(PIB, frequency = 4,start = 2007)
+class(pi)
+pibmexico<-decompose(pi)
+tendencia1<-pibmexico$trend
+plot(tendencia1, col="orange",main="PIB MEXICO",ylab= "PIB",xlab="años")
+
+
+pi<-ts(PIB[1:35,1], frequency = 4,start = 2007)
+pibmexico2<- stl(pi,s.window = "periodic",robust = T) 
+
+names(pibmexico2)
+pibmexico2
+
+
+tendencia2<- pibmexico2$time.series[,2]
+tendencia2
+
+lines(tendencia2,col="black")
+
+
+estacionariedad2<-pibmexico2$time.series[,1]
+estacionariedad2
+
+
+###########ajustar
+install.packages("fpp")
+require(fpp)
+ajus<- seasadj(desco2)  #ajustamos la estacionariedad de la serie de tiempo descompuesta
+
+####pronostico metodo ingenuo de la serie de tiempo con un ajuste estacional
+inge1<- naive(ajus)  ##
+plot(inge1)
+#pronostica una constante 
+#limites de confianza
+inge1
+
+inge1<- naive(ajus, h=4) #cuantos periodos quieres que te pronostique
+plot(inge1)
