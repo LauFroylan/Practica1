@@ -1,0 +1,42 @@
+install.packages("fpp")
+require(fpp)
+plot(window(elec,start=1980),ylab="Gwh", xlab = "Year",main = "Australian electricity production")
+####Estacionariedad, tendencia y ciclico
+
+#Para ver en mes se esta dando el mayor incremento en la estacionariedad
+seasonplot(elec,s=12, year.labels = TRUE, 
+           main = "Electricidad",
+           ylab = "Año", col=rainbow(20),year.labels.left = TRUE,pch=10)
+
+ #s numero de periodos
+#year.labels = TRUE etiqueta de años
+#main = titulo de grafica
+#arcoiris numero de colores
+
+plot(bricksq, ylab="million units", xlab = "Year",main = "Australian clay brick production")
+####Estacionaridad y ciclico pero no tendencia
+
+seasonplot(bricksq,s=4, year.labels = F,main = "unidades", ylab = "Año", col=rainbow(20),year.labels.left = TRUE,pch=10)
+bricksq
+
+
+#no estacionariedad ni tendencia pero si ciclico
+plot(hsales,main="sales of new one-family houses, USA", ylab="total sales", xlab="Year")
+
+
+seasonplot(hsales, s=12, year.labels = TRUE,
+           main = "Casas",
+           ylab = "total", col=rainbow(20), year.labels.left=TRUE, pch=15)
+
+dec<-decompose(bricksq)
+#eliminando tendencia
+sinesta<- bricksq-dec$seasonal
+sintend<- bricksq-dec$trend
+
+plot(sinesta)
+plot(sintend)
+
+
+#Analizar 60 a 79 buscar ciclos (partir la grafica) y las razones de tal comportamiento
+#http://datos.bancomundial.org/indicator/NY.GDP.MKTP.KD.ZG?locations=MX&view=chart
+#subir tambien word, scrib y base de datos
