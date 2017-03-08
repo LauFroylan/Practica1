@@ -1,0 +1,20 @@
+#ahora como vimos la clase pasasa hay dos modelos que podemos descomponer la ST
+# 1) modelo aditivo
+# 2) modelo multiplicativo
+
+####ahora descomponer una serie en un modelo aditivo
+
+#nombre de la descomposicion <- descompose(nombre de la serie)  # aqui es para 
+#descomponer la serie de tiempo por da el modelo aditivo
+
+#ahora para descompoer una ST en un modelo multiplicativo
+
+desctsmul<- decompose(desot, type = "mult") #
+
+#23 descomposicion del modelo aditivo
+
+#36 para eliminar la estacionariedad con paqueteria fpp  (seasadj(serie de tiempo))
+#39 para quitar la estacionariedad a mano (sinesta<- desot-dectsd$seasonal)
+
+#para confirmar que es igual
+eeadj-sinesta  #tiene que dar una matriz de 0
