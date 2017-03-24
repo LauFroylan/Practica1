@@ -1,0 +1,34 @@
+####Metodo de la deriva
+####Este metodo consiste en que el pronostico puede incrementar o reducirse sobre el tiempo depemdiendo del
+##promedio de los cambios historicos de la ST 
+###codigo en R
+#rwf(serie,h=num de pronosticos, drift=TRUE) genera pronosticos con el metodo de la deriva
+
+desoc<-read.csv(file.choose())
+desocts<-ts(desoc)
+
+require(forecast)
+rwf(desoc,h=4,drift = TRUE)
+
+desocmod1<-meanf(desocts, h=10)  ###3 metodo del promedio
+desocmod2<-naive(desocts,h=10)
+desocmod3<-snaive(desocts,h=10)
+desocmod4<-rwf(desocts,h=10,drift = T)
+
+x11()
+plot(desocmod1, main = "pronostico de desocupacion trimestral")
+lines(desocmod2$mean,col=5)
+lines(desocmod3$mean,col=6)
+lines(desocmod4$mean,col=7)
+
+legend("topright",lty = 1,col = c(5,6,7,8),legend=c("media", "ingenua","ingenuo estacional","deriva"))
+
+names(desocmod2)
+
+x11()
+plot(desocmod1, main = "pronostico de desocupacion trimestral")
+lines(desocmod2$fitted,col=5)
+lines(desocmod3$fitted,col=6)
+lines(desocmod4$fitted,col=7)
+
+legend("topright",lty = 1,col = c(5,6,7,8),legend=c("media", "ingenua","ingenuo estacional","deriva"))
