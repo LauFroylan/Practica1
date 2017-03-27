@@ -1,0 +1,44 @@
+#como importar una base de datos 2 tipos  como importar en R bajando la base de una pagina web
+asa<-read.csv("C:\\Users\\SALA-D4\\Documents\\IndicadoresENOE_2017-03-27.csv")
+asa1<-data.frame(read.csv("C:\\Users\\SALA-D4\\Documents\\IndicadoresENOE_2017-03-27.csv",header = T)[7,2:49]) #que reconozca el encabezado header= T
+# jalando la fila 7 de la columna 2 a la 49
+
+asat<- t(asa1) #para transponer solo ponemos una t
+asast<- ts(asat,start(2005),frequency = 4)  #la esta creando como entero, asi que tenemos que transponer la base 
+#de datos 
+
+View(asast)
+
+#exam como convertir de ts a time-series
+#examen funcion de window
+
+asast1<-as.numeric(asast) #declararla como numerica
+asast2<-ts(asast1,start(2005),frequency = 4) #ya la reconoce como Time-Series
+View(asast2)
+asast2
+
+#############suavizando exponencial en R
+require(forecast) #alpha que suaviza la serie de tiempo y tiene que ir de entre 0 y 1
+mod1<-ses(asast2,alpha = 0.1, initial = "simple",h=8) #simple por que es el suavizado exponencial simple (que tipo de suavizamiento quiero)
+ #h periodos que quiero que pronostique
+mod2<-ses(asast2,alpha = 0.3, initial = "simple",h=8)
+
+mod3<-ses(asast2,alpha = 0.95,initial = "simple",h=8)
+
+x11()
+plot(mod1,ylab = "Asalariados",xlab = "Año",main = "ASALARIADOS",type = "o")
+#lines(mod1$valores ajustados,col=color, type="o")
+#fitted = valores ajustados
+#mean = pronosticos
+lines(mod1$fitted,col="brown", type="o")
+lines(mod2$fitted,col="red", type="o")
+lines(mod3$fitted,col="green", type="o")
+
+lines(mod1$mean,col="brown", type="o")
+lines(mod2$mean,col="red", type="o")
+lines(mod3$mean,col="green", type="o")
+
+legend("topleft",lty = 1, col = c(1, "brown","red", "green"),c("datos",expression(alpha==0.1),expression(alpha==0.3),expression(alpha==0.95)),pch = 1)
+#pch cambiar el simbolo del cuadrito
+
+#el exponencial se utiliza cuando no hay una tendencia tan marcada 
